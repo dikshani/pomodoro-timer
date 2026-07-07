@@ -40,7 +40,9 @@ function App() {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(interval);
-          setIsRunning(false);
+
+          // Auto start next session
+          setIsRunning(true);
 
           if (sessionType === "work") {
             const newCount = sessionCount + 1;
