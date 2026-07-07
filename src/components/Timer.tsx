@@ -1,9 +1,14 @@
 type TimerProps = {
   timeLeft: number;
   sessionType: "work" | "shortBreak" | "longBreak";
+  progress: number;
 };
 
-function Timer({ timeLeft, sessionType }: TimerProps) {
+function Timer({
+  timeLeft,
+  sessionType,
+  progress,
+}: TimerProps) {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
@@ -21,6 +26,13 @@ function Timer({ timeLeft, sessionType }: TimerProps) {
       <h1>
         {minutes}:{seconds.toString().padStart(2, "0")}
       </h1>
+
+      <div className="progress-bar">
+        <div
+          className="progress-fill"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
     </div>
   );
 }

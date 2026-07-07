@@ -8,9 +8,17 @@ import Sessions from "./components/Sessions";
 import Settings from "./components/Settings";
 
 function App() {
-  const [workTime, setWorkTime] = useState(25);
-  const [shortBreak, setShortBreak] = useState(5);
-  const [longBreak, setLongBreak] = useState(15);
+  const [workTime, setWorkTime] = useState(() => {
+    return Number(localStorage.getItem("workTime")) || 25;
+  });
+
+  const [shortBreak, setShortBreak] = useState(() => {
+    return Number(localStorage.getItem("shortBreak")) || 5;
+  });
+
+  const [longBreak, setLongBreak] = useState(() => {
+    return Number(localStorage.getItem("longBreak")) || 15;
+  });
 
   const [timeLeft, setTimeLeft] = useState(workTime * 60);
   const [isRunning, setIsRunning] = useState(false);
@@ -33,6 +41,29 @@ function App() {
     }
   };
 
+  // Notification Sound
+  const playNotification = () => {
+    const audioContext = new AudioContext();
+
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 800;
+
+    oscillator.start();
+
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + 1
+    );
+
+    oscillator.stop(audioContext.currentTime + 1);
+  };
+
   useEffect(() => {
     if (!isRunning) return;
 
@@ -41,7 +72,8 @@ function App() {
         if (prevTime <= 1) {
           clearInterval(interval);
 
-          // Auto start next session
+          playNotification();
+
           setIsRunning(true);
 
           if (sessionType === "work") {
@@ -81,9 +113,20 @@ function App() {
   };
 
   const handleSaveSettings = () => {
+    localStorage.setItem("workTime", workTime.toString());
+    localStorage.setItem("shortBreak", shortBreak.toString());
+    localStorage.setItem("longBreak", longBreak.toString());
+
     setIsRunning(false);
-    setTimeLeft(getSessionTime(sessionType));
+    setSessionType("work");
+    setTimeLeft(workTime * 60);
   };
+
+  // Progress Bar
+  const totalTime = getSessionTime(sessionType);
+
+  const progress =
+    ((totalTime - timeLeft) / totalTime) * 100;
 
   return (
     <div className="app">
@@ -93,6 +136,7 @@ function App() {
         <Timer
           timeLeft={timeLeft}
           sessionType={sessionType}
+          progress={progress}
         />
 
         <Controls
