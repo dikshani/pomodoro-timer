@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -9,51 +8,82 @@ import Sessions from "./components/Sessions";
 import Settings from "./components/Settings";
 
 function App() {
-	const [timeLeft, setTimeLeft] = useState(25 * 60);
-	const [isRunning, setIsRunning] = useState(false);
- 
-	useEffect(() => {
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [isRunning, setIsRunning] = useState(false);
 
-  if (!isRunning) return;
+	const [workTime, setWorkTime] = useState(25);
+const [shortBreak, setShortBreak] = useState(5);
+const [longBreak, setLongBreak] = useState(15);
 
-const interval = setInterval(() => {
-  setTimeLeft((prevTime) => {
-    if (prevTime <= 1) {
-      clearInterval(interval);
-      setIsRunning(false);
-      return 0;
-    }
+  const [sessionType, setSessionType] =
+    useState<"work" | "shortBreak" | "longBreak">("work");
 
-    return prevTime - 1;
-  });
-}, 1000);
+  const [sessionCount, setSessionCount] = useState(0);
 
-  return () => clearInterval(interval);
+  useEffect(() => {
+    if (!isRunning) return;
 
-}, [isRunning]);
+    const interval = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(interval);
+          setIsRunning(false);
 
-const handleReset = () => {
+          // session complete logic
+          setSessionCount((prev) => prev + 1);
+
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setTimeLeft(workTime * 60);
+  };
+	const handleSaveSettings = () => {
   setIsRunning(false);
-  setTimeLeft(25 * 60);
-};
 
-	return (
+  if (sessionType === "work") {
+    setTimeLeft(workTime * 60);
+  } else if (sessionType === "shortBreak") {
+    setTimeLeft(shortBreak * 60);
+  } else {
+    setTimeLeft(longBreak * 60);
+  }
+};
+	
+
+	console.log("Work Time:", workTime);
+  return (
     <div className="app">
       <div className="container">
         <Header />
 
-<p>Running: {isRunning ? "Yes" : "No"}</p>
-
         <Timer timeLeft={timeLeft} />
-        
-	<Controls
-  isRunning={isRunning}
-  setIsRunning={setIsRunning}
-  onReset={handleReset}
+
+        <Controls
+          isRunning={isRunning}
+          setIsRunning={setIsRunning}
+          onReset={handleReset}
+        />
+
+        <Sessions sessionCount={sessionCount} />
+
+<Settings
+  workTime={workTime}
+  setWorkTime={setWorkTime}
+  shortBreak={shortBreak}
+  setShortBreak={setShortBreak}
+  longBreak={longBreak}
+  setLongBreak={setLongBreak}
+  onSave={handleSaveSettings}
 />
-	
-	<Sessions />
-        <Settings />
+
       </div>
     </div>
   );

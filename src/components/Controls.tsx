@@ -1,33 +1,23 @@
+import type { Dispatch, SetStateAction } from "react";
+
 type ControlsProps = {
   isRunning: boolean;
-  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsRunning: Dispatch<SetStateAction<boolean>>;
   onReset: () => void;
 };
 
-function Controls({
-  isRunning,
-  setIsRunning,
-  onReset,
-}: ControlsProps) {
+function Controls({ isRunning, setIsRunning, onReset }: ControlsProps) {
   return (
     <div className="controls">
-      <button
-        onClick={() => setIsRunning(true)}
-        disabled={isRunning}
-      >
+      <button onClick={() => setIsRunning(true)} disabled={isRunning}>
         ▶ Start
       </button>
 
-      <button
-        onClick={() => setIsRunning(false)}
-        disabled={!isRunning}
-      >
+      <button onClick={() => setIsRunning(false)} disabled={!isRunning}>
         ⏸ Pause
       </button>
 
-      <button onClick={onReset}>
-        🔄 Reset
-      </button>
+      <button onClick={onReset}>🔄 Reset</button>
     </div>
   );
 }
