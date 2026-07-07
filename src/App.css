@@ -143,3 +143,99 @@
   border-radius: 20px;
   transition: width 1s linear;
 }
+
+
+/* ========================= */
+/* Header */
+/* ========================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.theme-btn {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.theme-btn:hover {
+  background: #34495e;
+}
+
+/* ========================= */
+/* Dark Mode */
+/* ========================= */
+
+.app.dark {
+  background: #111827;
+}
+
+.app.dark .container {
+  background: #1f2937;
+  color: white;
+}
+
+.app.dark .timer-card {
+  background: #dc2626;
+}
+
+.app.dark .sessions h3,
+.app.dark .settings h3,
+.app.dark label {
+  color: white;
+}
+
+.app.dark input {
+  background: #374151;
+  color: white;
+  border: 1px solid #4b5563;
+}
+
+.app.dark .controls button {
+  background: #374151;
+}
+
+.app.dark .controls button:hover {
+  background: #4b5563;
+}
+
+.app.dark .settings button {
+  background: #16a34a;
+}
+
+.app.dark .settings button:hover {
+  background: #15803d;
+}
+
+.app.dark .theme-btn {
+  background: #facc15;
+  color: black;
+}
+
+.statistics {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f4f4f4;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.app.dark .statistics {
+  background: #374151;
+  color: white;
+}
