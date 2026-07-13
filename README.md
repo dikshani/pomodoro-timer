@@ -274,31 +274,37 @@ Deployment Components:
 
 ## Home Page
 
-![Home](screenshots/home.png)
+![Home](screenshots/Home.png)
 
 ---
 
 ## Settings
 
-![Settings](screenshots/settings.png)
+![Settings](screenshots/Settings.png)
 
 ---
 
 ## Running Work Session
 
-![Work Session](screenshots/work-session.png)
+![Work Session](screenshots/WorkSession.png)
 
 ---
 
 ## Short Break
 
-![Short Break](screenshots/short-break.png)
+![Short Break](screenshots/Short_Break.png)
 
 ---
 
 ## Long Break
 
-![Long Break](screenshots/long-break.png)
+![Long Break](screenshots/Longbreak.png)
+
+---
+
+## Dark Mode
+
+![Dark Mode](screenshots/Dark_Mode.png)
 
 ---
 
@@ -308,9 +314,9 @@ Deployment Components:
 
 ---
 
-## Docker Container
+## ec2 and docker Container
 
-![Docker](screenshots/docker.png)
+![Docker](screenshots/ec2.png)
 
 ---
 
